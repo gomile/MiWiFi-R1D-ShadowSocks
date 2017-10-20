@@ -22,6 +22,7 @@ start() {
     /etc/init.d/dnsmasq restart
 	ipset_gfwlist
 	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -b 0.0.0.0 -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
+	#service_start /usr/bin/ss-dns2tcp -l 5353 -s 8.8.8.8 -p 53
     service_start /usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0 -f $SS_REDIR_PID_FILE
 }
 
