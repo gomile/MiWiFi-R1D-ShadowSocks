@@ -1,0 +1,36 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2006-2011 OpenWrt.org
+. /lib/functions.sh
+
+START=95
+
+DNS=8.8.8.8:53
+TUNNEL_PORT=5353
+SS_REDIR_PID_FILE=/var/run/ss-redir.pid
+SS_TUNNEL_PID_FILE=/var/run/ss-tunnel.pid
+CONFIG_FILE=/etc/shadowsocks.json
+
+ipset_gfwlist()
+{
+	ipset -N gfwlist iphash -!
+	iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1081
+}
+
+start() {
+    rm -rf /etc/dnsmasq.d/*
+    wget -O /etc/dnsmasq.d/gfw_ipset.conf  http://webbackup-10046856.cossh.myqcloud.com/gfwlist/gfw_ipset.conf
+    /etc/init.d/dnsmasq restart
+	ipset_gfwlist
+	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -b 0.0.0.0 -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
+    service_start /usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0 -f $SS_REDIR_PID_FILE
+}
+
+stop() {
+    service_stop /usr/bin/ss-redir
+	service_stop /usr/bin/ss-tunnel
+}
+restart() {
+	stop
+	sleep 1
+	start
+}
