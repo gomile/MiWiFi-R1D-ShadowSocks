@@ -55,7 +55,7 @@ if [ ! -d "/etc/dnsmasq.d" ]; then
   mkdir -p /etc/dnsmasq.d
 fi
 rm -rf /etc/dnsmasq.d/*
-curl -o /etc/dnsmasq.d/gfw_ipset.conf  http://webbackup-10046856.cossh.myqcloud.com/gfwlist/gfw_ipset.conf
+curl -o /etc/dnsmasq.d/gfw_ipset.conf  https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/gfw_ipset.conf
 
 #config firewall
 if [ ! -f "/etc/firewall.user" ]; then
