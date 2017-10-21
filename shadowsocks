@@ -10,25 +10,20 @@ SS_REDIR_PID_FILE=/var/run/ss-redir.pid
 SS_TUNNEL_PID_FILE=/var/run/ss-tunnel.pid
 CONFIG_FILE=/etc/shadowsocks.json
 
-ipset_gfwlist()
-{
-	ipset -N gfwlist iphash -!
-	iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1081
-}
-
 start() {
     rm -rf /etc/dnsmasq.d/*
     wget -O /etc/dnsmasq.d/gfw_ipset.conf  http://webbackup-10046856.cossh.myqcloud.com/gfwlist/gfw_ipset.conf
     /etc/init.d/dnsmasq restart
-	ipset_gfwlist
 	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -b 0.0.0.0 -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
 	#service_start /usr/bin/ss-dns2tcp -l 5353 -s 8.8.8.8 -p 53
     service_start /usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0 -f $SS_REDIR_PID_FILE
+    echo "程序已经启动"
 }
 
 stop() {
     service_stop /usr/bin/ss-redir
 	service_stop /usr/bin/ss-tunnel
+	echo "程序已经停止"
 }
 restart() {
 	stop
