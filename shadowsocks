@@ -22,7 +22,5 @@ stop() {
 	echo "程序已经停止"
 }
 restart() {
-	stop
-	sleep 1
-	start
+    stop && start
 }
