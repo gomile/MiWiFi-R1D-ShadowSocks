@@ -39,7 +39,6 @@ cat > /etc/shadowsocks.json<<-EOF
 }
 EOF
 
-
 # Config shadowsocks init script
 if [ -f "/etc/init.d/shadowsocks" ]; then
 	rm -f /etc/init.d/shadowsocks
