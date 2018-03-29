@@ -26,7 +26,6 @@ read method
 
 # Config shadowsocks
 if [ -f "/etc/shadowsocks.json" ]; then
-    cp -f /etc/shadowsocks.json /etc/shadowsocks.json.bak
 	rm -f /etc/shadowsocks.json
 fi
 cat > /etc/shadowsocks.json<<-EOF
@@ -35,7 +34,7 @@ cat > /etc/shadowsocks.json<<-EOF
   "server_port": ${serverport},
   "local_port": 1081,
   "password": "${shadowsockspwd}",
-  "timeout": 60,
+  "timeout": 600,
   "method": "${method}"
 }
 EOF
@@ -43,7 +42,6 @@ EOF
 
 # Config shadowsocks init script
 if [ -f "/etc/init.d/shadowsocks" ]; then
-    cp -f /etc/init.d/shadowsocks /etc/init.d/shadowsocks.bak
 	rm -f /etc/init.d/shadowsocks
 fi
 curl -o /etc/init.d/shadowsocks https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/shadowsocks
