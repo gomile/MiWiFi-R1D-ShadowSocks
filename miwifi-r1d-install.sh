@@ -59,7 +59,6 @@ curl -o /etc/dnsmasq.d/gfw_ipset.conf  https://raw.githubusercontent.com/kiss443
 if [ ! -f "/etc/firewall.user" ]; then
 　　touch /etc/firewall.user
 fi
-
 cp -f /etc/firewall.user /etc/firewall.user.bak
 echo "ipset -N gfwlist iphash -! " >> /etc/firewall.user
 echo "iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1081" >> /etc/firewall.user
