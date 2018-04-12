@@ -53,6 +53,12 @@ if [ ! -d "/etc/dnsmasq.d" ]; then
 fi
 rm -rf /etc/dnsmasq.d/*
 curl -o /etc/dnsmasq.d/gfw_ipset.conf  https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/gfw_ipset.conf
+chmod +x /etc/dnsmasq.d/gfw_ipset.conf
+
+#赋予执行权限
+chmod +x /usr/bin/ss-redir
+chmod +x /usr/bin/ss-local
+chmod +x /usr/bin/ss-tunnel
 
 #config firewall
 if [ ! -f "/etc/firewall.user" ]; then
@@ -61,6 +67,7 @@ fi
 cp -f /etc/firewall.user /etc/firewall.user.bak
 echo "ipset -N gfwlist iphash -! " >> /etc/firewall.user
 echo "iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1081" >> /etc/firewall.user
+chmod +x /etc/firewall.user
 
 #restart all service
 /etc/init.d/dnsmasq restart
