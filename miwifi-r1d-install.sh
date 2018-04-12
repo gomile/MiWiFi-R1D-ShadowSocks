@@ -30,12 +30,12 @@ if [ -f "/etc/shadowsocks.json" ]; then
 fi
 cat > /etc/shadowsocks.json<<-EOF
 {
-  "server": "${serverip}",
+  "server": ${serverip},
   "server_port": ${serverport},
   "local_port": 1081,
-  "password": "${shadowsockspwd}",
+  "password": ${shadowsockspwd},
   "timeout": 600,
-  "method": "${method}"
+  "method": ${method}
 }
 EOF
 
