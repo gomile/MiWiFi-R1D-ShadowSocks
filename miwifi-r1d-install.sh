@@ -61,9 +61,6 @@ chmod +x /usr/bin/ss-local
 chmod +x /usr/bin/ss-tunnel
 
 #config firewall
-if [ ! -f "/etc/firewall.user" ]; then
-　　touch /etc/firewall.user
-fi
 cp -f /etc/firewall.user /etc/firewall.user.bak
 echo "ipset -N gfwlist iphash -! " >> /etc/firewall.user
 echo "iptables -t nat -A PREROUTING -p tcp -m set --match-set gfwlist dst -j REDIRECT --to-port 1081" >> /etc/firewall.user
