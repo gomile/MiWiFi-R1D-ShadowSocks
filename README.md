@@ -1,7 +1,10 @@
 # MiWiFi-R1D-ShadowSocks
 安装步骤
 
+
 curl -o /tmp/ss.sh https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/miwifi-r1d-install.sh && sh /tmp/ss.sh
+
+
 
 简单说一下gfwlistdnsmaq的更新
 
