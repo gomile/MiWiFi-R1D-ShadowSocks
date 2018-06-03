@@ -14,6 +14,7 @@ SS_TUNNEL_PID_FILE=/var/run/ss-tunnel.pid
 CONFIG_FILE=/etc/shadowsocks.json
 
 start() {
+    sleep 10
 	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -b 0.0.0.0 -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
     service_start /usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0 -f $SS_REDIR_PID_FILE
     echo "程序已经启动"
