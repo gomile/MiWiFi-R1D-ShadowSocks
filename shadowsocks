@@ -17,14 +17,12 @@ start() {
     sleep 10
 	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -b 0.0.0.0 -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
     service_start /usr/bin/ss-redir -c $CONFIG_FILE -b 0.0.0.0 -f $SS_REDIR_PID_FILE
-	ss-status &
     echo "程序已经启动"
 }
 
 stop() {
     service_stop /usr/bin/ss-redir
 	service_stop /usr/bin/ss-tunnel
-	killall -HUP ss-status
 	echo "程序已经停止"
 }
 restart() {
