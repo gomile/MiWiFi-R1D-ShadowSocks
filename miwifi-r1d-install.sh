@@ -47,6 +47,11 @@ curl -o /etc/init.d/shadowsocks https://raw.githubusercontent.com/kiss4437/MiWiF
 chmod +x /etc/init.d/shadowsocks
 ln -s /etc/init.d/shadowsocks /bin/shadowsocks
 
+# status check script
+curl -o /usr/bin/ss-status https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/ss-status
+chmod +x /usr/bin/ss-status
+
+
 #config dnsmasq
 if [ ! -d "/etc/dnsmasq.d" ]; then
   mkdir -p /etc/dnsmasq.d
