@@ -19,6 +19,6 @@ start() {
     done
 }
 stop() {
+    echo "网络监测程序已经停止"
     killall -HUP ss-status
-	echo "网络监测程序已经停止"
 }
