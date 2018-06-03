@@ -48,8 +48,8 @@ chmod +x /etc/init.d/shadowsocks
 ln -s /etc/init.d/shadowsocks /bin/shadowsocks
 
 # status check script
-curl -o /usr/bin/ss-status https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/ss-status
-chmod +x /usr/bin/ss-status
+curl -o /etc/init.d/ss-status https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/ss-status
+chmod +x /etc/init.d/ss-status
 
 
 #config dnsmasq
@@ -76,6 +76,8 @@ chmod +x /etc/firewall.user
 /etc/init.d/firewall restart
 /etc/init.d/shadowsocks start
 /etc/init.d/shadowsocks enable
+/etc/init.d/ss-status start
+/etc/init.d/ss-status enable
 
 #install successfully
 ps | grep ss-redir | grep -v grep
