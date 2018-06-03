@@ -22,6 +22,3 @@ stop() {
     killall -HUP ss-status
 	echo "网络监测程序已经停止"
 }
-restart() {
-    stop && start
-}
