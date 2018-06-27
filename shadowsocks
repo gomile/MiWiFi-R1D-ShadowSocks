@@ -8,27 +8,38 @@
 START=99
 
 DNS=8.8.8.8:53
+REDIR_PORT=1081
+LOCAL_PORT=1082
 TUNNEL_PORT=5353
 SS_REDIR_PID_FILE=/var/run/ss-redir.pid
 SS_TUNNEL_PID_FILE=/var/run/ss-tunnel.pid
+SS_LOCAL_PID_FILE=/var/run/ss-local.pid
 CONFIG_FILE=/etc/shadowsocks.json
 
 start() {
     sleep 10
-	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
-    service_start /usr/bin/ss-redir -c $CONFIG_FILE -f $SS_REDIR_PID_FILE
+	#service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
+    service_start /usr/bin/ss-redir -c $CONFIG_FILE -l $REDIR_PORT -f $SS_REDIR_PID_FILE
+	service_start /usr/bin/ss-local -c $CONFIG_FILE -l $LOCAL_PORT -f $SS_LOCAL_PID_FILE
+	service_start /usr/bin/dns2socks 127.0.0.1:$LOCAL_PORT $DNS 127.0.0.1:$TUNNEL_PORT
     echo "程序已经启动"
 }
 
 stop() {
     service_stop /usr/bin/ss-redir
-	service_stop /usr/bin/ss-tunnel
+	#service_stop /usr/bin/ss-tunnel
+	service_stop /usr/bin/ss-local
+	service_stop /usr/bin/dns2socks
 	echo "程序已经停止"
 }
 restart() {
     service_stop /usr/bin/ss-redir
-	service_stop /usr/bin/ss-tunnel
-	service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
-    service_start /usr/bin/ss-redir -c $CONFIG_FILE -f $SS_REDIR_PID_FILE
+	#service_stop /usr/bin/ss-tunnel
+	service_stop /usr/bin/ss-local
+	service_stop /usr/bin/dns2socks	
+	#service_start /usr/bin/ss-tunnel -c $CONFIG_FILE -l $TUNNEL_PORT -L $DNS -u -f $SS_TUNNEL_PID_FILE
+    service_start /usr/bin/ss-redir -c $CONFIG_FILE -l $REDIR_PORT -f $SS_REDIR_PID_FILE
+	service_start /usr/bin/ss-local -c $CONFIG_FILE -l $LOCAL_PORT -f $SS_LOCAL_PID_FILE
+	service_start /usr/bin/dns2socks 127.0.0.1:$LOCAL_PORT $DNS 127.0.0.1:$TUNNEL_PORT
 	echo "程序已重启"
 }
