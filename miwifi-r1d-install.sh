@@ -56,6 +56,10 @@ rm -rf /etc/dnsmasq.d/*
 curl -o /etc/dnsmasq.d/gfw_ipset.conf  https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/gfw_ipset.conf
 chmod +x /etc/dnsmasq.d/gfw_ipset.conf
 
+# Config dns2socks
+curl -o /usr/bin/dns2socks https://raw.githubusercontent.com/kiss4437/MiWiFi-R1D-ShadowSocks/master/dns2socks
+chmod +x /usr/bin/dns2socks
+
 #赋予执行权限
 chmod +x /usr/bin/ss-redir
 chmod +x /usr/bin/ss-local
